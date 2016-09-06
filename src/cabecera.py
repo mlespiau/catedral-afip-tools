@@ -62,7 +62,7 @@ class CabeceraTipoUno:
 
     def getNumeroDeDocumentoIdentificatorioDelComprador(self):
         if self.cuit.strip() == '0' or self.cuit.strip() == '':
-            return '11111111111' # para consumidor final todos 1
+            return '00011111111' # para consumidor final todos 1
         else:
             return self.cuit
 
