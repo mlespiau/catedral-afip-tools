@@ -50,9 +50,9 @@ def main():
                         # calculate last line
                         doNothing = None
                     else:
-                        detalle += d.toAfip() + "\n"
-                        cabecera += cUno.toAfip() + "\n"
-            return Response(cabecera + cDos.toAfip() + "\n" + "\n\n\n\n\n---\n\n\n" + detalle, mimetype='text/text')
+                        detalle += d.toAfip() + "\r\n"
+                        cabecera += cUno.toAfip() + "\r\n"
+            return Response(cabecera + cDos.toAfip() + "\r\n" + "\r\n\r\n\r\n\r\n\r\n---\r\n\r\n\r\n" + detalle, mimetype='text/text')
     return render_template('index.html')
 
 if __name__ == "__main__":
