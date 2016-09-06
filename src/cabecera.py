@@ -81,8 +81,6 @@ class CabeceraTipoUno:
 
     def calculateImporteNetoGravado(self):
         netoRI = self.data[8].split('.')
-        print('algo:')
-        print(self.data)
         netoRIinteger, netoRIdecimal = int(netoRI[0]), netoRI[1]
         netoCF = self.data[10].split('.')
         netoCFinteger, netoCFdecimal = int(netoCF[0]), netoCF[1]
