@@ -56,9 +56,9 @@ class CabeceraTipoUno:
 
     def getCodigoDeDocumentoIdentificatorioDelComprador(self):
         if self.cuit.strip() == '0' or self.cuit.strip() == '':
-            return '80'
-        else:
             return '96'
+        else:
+            return '80'
 
     def getNumeroDeDocumentoIdentificatorioDelComprador(self):
         if self.cuit.strip() == '0' or self.cuit.strip() == '':

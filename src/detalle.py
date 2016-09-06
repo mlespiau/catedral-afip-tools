@@ -120,8 +120,8 @@ class Detalle:
             self.getUnidadDeMedida() + \
             formatearImporte(self.getTotal(), 13, 3) + \
             formatearImporte(self.getImporteBonificacion(), 13, 2) + \
-            "00000000000000000" + \
-            formatearImporte(self.getTotal(), 13, 2) + \
+            "0000000000000000" + \
+            formatearImporte(self.getTotal(), 13, 3) + \
             self.getAlicuotaDeIvaAplicable() + \
             self.getIndicacionDeExcentoOGrabado() + \
             self.getIndicacionDeAnulacion() + \
