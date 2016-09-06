@@ -26,7 +26,7 @@ class Detalle:
                 self.alicuotaIva = "0000"
 
     def calculateSubTotalPorRegistro(self):
-        netoRI = float(self.data[9])
+        netoRI = float(self.data[8])
         netoCF = float(self.data[10])
         netoMON = float(self.data[12])
         netoEX = float(self.data[14])
