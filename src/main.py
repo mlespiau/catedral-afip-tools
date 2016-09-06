@@ -35,7 +35,7 @@ def main():
             detalle = ''
             cabecera = ''
             isLastRound = False
-            cDos = CabeceraTipoDos()
+            cDos = CabeceraTipoDos(request.form['cuit'])
             for row in ventasCsv:
                 print(row)
                 cUno = CabeceraTipoUno(row)

@@ -219,13 +219,14 @@ class CabeceraTipoUno:
 # Campo 30: Fecha anulación del comprobante.
 
 class CabeceraTipoDos:
-    def __init__(self):
+    def __init__(self, cuitDelInformante):
         self.tipoRegistro = '2'
         self.periodo = 'AAAAMM'
         self.cantidadRegistrosDeTipoUno = 0
         self.importeTotal = 0
         self.importeNetoGravadoTotal = 0
         self.impuestoLiquidado = 0
+        self.cuitDelInformante = cuitDelInformante
 
     def addRow(self, data, cabeceraTipoUno):
         self.cantidadRegistrosDeTipoUno += 1
@@ -249,7 +250,7 @@ class CabeceraTipoDos:
         return '{0:08d}'.format(self.cantidadRegistrosDeTipoUno)
 
     def getCuitDelInformante(self):
-        return '20276886542'
+        return self.cuitDelInformante
 
     def getImporteTotal(self):
         return self.importeTotal
