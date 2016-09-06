@@ -17,6 +17,7 @@ class Detalle:
             puntoDeVentaAndNumeroDeComprobante = data[3].split("-")
             self.puntoDeVenta = puntoDeVentaAndNumeroDeComprobante[0]
             self.numeroDeComprobante = puntoDeVentaAndNumeroDeComprobante[1]
+            self.importeTotal = float(data[20])
             self.calculateSubTotalPorRegistro()
             if data[6] == "21.00":
                 self.alicuotaIva = "2100"
@@ -102,6 +103,9 @@ class Detalle:
     def getLibre(self):
         return 'Texto libre'
 
+    def getTotal(self):
+        return self.importeTotal
+
     def isEmpty(self):
         return self.tipoComprobante == ''
 
@@ -114,9 +118,10 @@ class Detalle:
             self.getNumeroDeComprobanteRegistrado() + \
             self.getCantidad() + \
             self.getUnidadDeMedida() + \
-            formatearImporte(self.getPrecioUnitario(), 13, 3) + \
+            formatearImporte(self.getTotal(), 13, 3) + \
             formatearImporte(self.getImporteBonificacion(), 13, 2) + \
-            formatearImporte(self.getSubTotalPorRegistro(), 13, 2) + \
+            "00000000000000000" + \
+            formatearImporte(self.getTotal(), 13, 2) + \
             self.getAlicuotaDeIvaAplicable() + \
             self.getIndicacionDeExcentoOGrabado() + \
             self.getIndicacionDeAnulacion() + \
