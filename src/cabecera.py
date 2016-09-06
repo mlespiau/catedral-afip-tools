@@ -1,12 +1,12 @@
 import datetime
 
-def formatearImporte(importe):
+def formatearImporte(importe, numerales, decimales):
     resultado = str(importe).split('.')
     parteEntera = int(resultado[0])
     parteDecimal = str(resultado[1])
     if len(parteDecimal) > 3:
         parteDecimal = parteDecimal[:3]
-    return '{0:013d}'.format(parteEntera) + str(parteDecimal).ljust(2, '0')
+    return ('{0:0' + str(numerales) + 'd}').format(parteEntera) + str(parteDecimal).ljust(decimales, '0')
 
 class CabeceraTipoUno:
     def __init__(self, data):
@@ -55,7 +55,10 @@ class CabeceraTipoUno:
         return '{0:03d}'.format(1)
 
     def getCodigoDeDocumentoIdentificatorioDelComprador(self):
-        return '80'
+        if self.cuit.strip() == '0' or self.cuit.strip() == '':
+            return '80'
+        else:
+            return '96'
 
     def getNumeroDeDocumentoIdentificatorioDelComprador(self):
         if self.cuit.strip() == '0' or self.cuit.strip() == '':
@@ -149,7 +152,7 @@ class CabeceraTipoUno:
 #Este campo será cero en la última hoja del comprobante lo cual, de existir una correlatividad numérica en los comprobantes,
 #se determina con la siguiente validación: Campo 7 + Campo 8 - 1= Campo 6.
     def getTransporte(self):
-        return '0'
+        return '0.0'
 
     def getTipoResponsable(self):
         return self.tipoResponsable
@@ -161,7 +164,7 @@ class CabeceraTipoUno:
         return '{0:04d}'.format(1) + str('0').ljust(6, '0')
 
     def getCantidadAlicuotasIva(self):
-        return '2'
+        return '1'
 
     def getCodigoOperacion(self):
         return ' '
@@ -190,18 +193,17 @@ class CabeceraTipoUno:
             self.getCodigoDeDocumentoIdentificatorioDelComprador() +\
             self.getNumeroDeDocumentoIdentificatorioDelComprador() +\
             self.getDenominacionDeComprador() +\
-            formatearImporte(self.getImporteTotal()) +\
-            formatearImporte(self.getTotalConceptosQueNoIntegranElPrecioGravado()) +\
-            formatearImporte(self.getImporteNetoGravado()) +\
-            formatearImporte(self.getImpuestoLiquidado()) +\
-            formatearImporte(self.getImpuestoLiquidadoRniNoCategorizados()) +\
-            formatearImporte(self.getImpuestoOperacionesExcentas()) +\
-            formatearImporte(self.getImpuestosNacionales()) +\
-            formatearImporte(self.getImpuestosIngresosBrutos()) +\
-            formatearImporte(self.getImpuestosMunicipales()) +\
-            formatearImporte(self.getImpuestosInternos()) +\
-            self.getTransporte() +\
-            "00000000000000" +\
+            formatearImporte(self.getImporteTotal(), 13, 2) +\
+            formatearImporte(self.getTotalConceptosQueNoIntegranElPrecioGravado(), 13, 2) +\
+            formatearImporte(self.getImporteNetoGravado(), 13, 2) +\
+            formatearImporte(self.getImpuestoLiquidado(), 13, 2) +\
+            formatearImporte(self.getImpuestoLiquidadoRniNoCategorizados(), 13, 2) +\
+            formatearImporte(self.getImpuestoOperacionesExcentas(), 13, 2) +\
+            formatearImporte(self.getImpuestosNacionales(), 13, 2) +\
+            formatearImporte(self.getImpuestosIngresosBrutos(), 13, 2) +\
+            formatearImporte(self.getImpuestosMunicipales(), 13, 2) +\
+            formatearImporte(self.getImpuestosInternos(), 13, 2) +\
+            formatearImporte(self.getTransporte(), 13, 2) +\
             self.getTipoResponsable() +\
             self.getCodigoMoneda() +\
             self.getTipoCambio() +\
@@ -258,7 +260,6 @@ class CabeceraTipoDos:
         return '0.0'
 
     def getImporteNetoGravado(self):
-        print(self.importeNetoGravadoTotal)
         return self.importeNetoGravadoTotal
 
     def getImpuestoLiquidado(self):
@@ -287,12 +288,12 @@ class CabeceraTipoDos:
             self.getRelleno(17) +\
             self.getCuitDelInformante() +\
             self.getRelleno(20) +\
-            formatearImporte(self.getImporteTotal()) +\
-            formatearImporte(self.getTotalConceptosQueNoIntegranElPrecioGravado()) +\
-            formatearImporte(self.getImporteNetoGravado()) +\
-            formatearImporte(self.getImpuestoLiquidado()) +\
-            formatearImporte(self.getImpuestoOperacionesExcentas()) +\
-            formatearImporte(self.getImpuestosNacionales()) +\
-            formatearImporte(self.getImpuestosIngresosBrutos()) +\
-            formatearImporte(self.getImpuestosMunicipales()) +\
-            formatearImporte(self.getImpuestosInternos())
+            formatearImporte(self.getImporteTotal(), 12, 3) +\
+            formatearImporte(self.getTotalConceptosQueNoIntegranElPrecioGravado(), 13, 2) +\
+            formatearImporte(self.getImporteNetoGravado(), 13, 2) +\
+            formatearImporte(self.getImpuestoLiquidado(), 13, 2) +\
+            formatearImporte(self.getImpuestoOperacionesExcentas(), 13, 2) +\
+            formatearImporte(self.getImpuestosNacionales(), 13, 2) +\
+            formatearImporte(self.getImpuestosIngresosBrutos(), 13, 2) +\
+            formatearImporte(self.getImpuestosMunicipales(), 13, 2) +\
+            formatearImporte(self.getImpuestosInternos(), 13, 2)
