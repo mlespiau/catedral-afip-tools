@@ -235,7 +235,7 @@ class CabeceraTipoDos:
         self.importeNetoGravadoTotal += float(cabeceraTipoUno.getImporteNetoGravado())
         self.impuestoLiquidado += float(cabeceraTipoUno.getImpuestoLiquidado())
         if self.periodo == 'AAAAMM':
-            self.periodo = datetime.datetime.strptime(data[1], "%m/%d/%y").strftime("%Y%m")
+            self.periodo = datetime.datetime.strptime(data[1], "%d/%m/%y").strftime("%Y%m")
 
     def getTipoRegistro(self):
         return self.tipoRegistro
