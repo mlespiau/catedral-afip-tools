@@ -26,7 +26,7 @@ class CabeceraTipoUno:
         return '1'
 
     def getFechaComprobante(self):
-        return datetime.datetime.strptime(self.fechaComprobante, "%d/%m/%y").strftime("%Y%m%d")
+        return datetime.datetime.strptime(self.fechaComprobante, "%m/%d/%y").strftime("%Y%m%d")
 
     def getTipoComprobante(self):
         tipoComprobantes = { 'FA': '01', 'FB': '06', 'N/C B': '08', 'N/C A': '03' }

@@ -57,7 +57,7 @@ class Detalle:
         return 'C'
 
     def getFechaComprobante(self):
-        return datetime.datetime.strptime(self.fechaComprobante, "%d/%m/%y").strftime("%Y%m%d")
+        return datetime.datetime.strptime(self.fechaComprobante, "%m/%d/%y").strftime("%Y%m%d")
 
     def getPuntoDeVenta(self):
         return self.puntoDeVenta

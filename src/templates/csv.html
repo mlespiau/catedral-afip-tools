@@ -1,0 +1,67 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}This is an example page{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  <!-- ... -->
+</div>
+{% endblock %}
+
+{% block content %}
+  <h1>Catedral - Afip Tools</h1>
+  <form method="post" enctype="multipart/form-data">
+      <div class="container" style="margin-top: 20px;">
+          <div class="row">
+              <div class="col-lg-6 col-sm-6 col-12">
+                  <h4>Subir archivo csv</h4>
+                  <div class="input-group">
+                      <label class="input-group-btn">
+                          <span class="btn btn-primary">
+                              Browse&hellip; <input type="file" name="file" style="display: none;" multiple>
+                          </span>
+                      </label>
+                      <input type="text" class="form-control" readonly>
+                  </div>
+                  <span class="help-block">
+                      Subir un csv generado al exportar del archivo que genera Catedral
+                  </span>
+              </div>
+          </div>
+          <button type="submit" class="btn btn-default">Subir</button>
+      </div>
+  </form>
+{% endblock %}
+
+{% block scripts %}
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script>
+$(function() {
+
+  // We can attach the `fileselect` event to all file inputs on the page
+  $(document).on('change', ':file', function() {
+    var input = $(this),
+        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+    input.trigger('fileselect', [numFiles, label]);
+  });
+
+  // We can watch for our custom `fileselect` event like this
+  $(document).ready( function() {
+      $(':file').on('fileselect', function(event, numFiles, label) {
+
+          var input = $(this).parents('.input-group').find(':text'),
+              log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+          if( input.length ) {
+              input.val(log);
+          } else {
+              if( log ) alert(log);
+          }
+
+      });
+  });
+
+});
+</script>
+{% endblock %}
