@@ -55,13 +55,13 @@ class CabeceraTipoUno:
         return '{0:03d}'.format(1)
 
     def getCodigoDeDocumentoIdentificatorioDelComprador(self):
-        if self.cuit.strip() == '0' or self.cuit.strip() == '':
+        if self.cuit.strip() == '0' or self.cuit.strip() == '' or self.cuit.strip() == '111111':
             return '96'
         else:
             return '80'
 
     def getNumeroDeDocumentoIdentificatorioDelComprador(self):
-        if self.cuit.strip() == '0' or self.cuit.strip() == '':
+        if self.cuit.strip() == '0' or self.cuit.strip() == '' or self.cuit.strip() == '111111':
             return '00011111111' # para consumidor final todos 1
         else:
             return self.cuit

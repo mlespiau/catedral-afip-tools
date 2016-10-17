@@ -127,7 +127,7 @@ def csv_parser():
                     except ValueError:
                         newRow.append(row[0])
                     newRow.append(normalizarTipo(row[9]))
-                    newRow.append('0001-' + row[13])
+                    newRow.append('{0:04d}'.format(int(row[11])) + '-' + '{0:08d}'.format(int(row[13])))
                     newRow.append(row[2])
                     newRow.append(row[4])
                     ivaRI = '0.0'
