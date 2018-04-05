@@ -30,6 +30,32 @@ def normalizarTasa(tasa):
 def normalizarFloat(valor):
     return valor.replace(',', '')
 
+def crearReporte(cuit, ventasCsvText):
+    stream = io.StringIO(ventasCsvText, newline=None)
+    ventasCsv = csv.reader(stream, delimiter=',', quotechar='"')
+    next(ventasCsv, None)
+    detalle = ''
+    cabecera = ''
+    isLastRound = False
+    cDos = CabeceraTipoDos(cuit)
+    for row in ventasCsv:
+        print(row)
+        cUno = CabeceraTipoUno(row)
+        d = Detalle(row)
+        if cUno.isEmpty():
+            isLastRound = True
+            print('isLastRound is true')
+        else:
+            cDos.addRow(row, cUno)
+            print('cUno' + row[0])
+            if isLastRound == True:
+                # calculate last line
+                doNothing = None
+            else:
+                detalle += d.toAfip() + "\r\n"
+                cabecera += cUno.toAfip() + "\r\n"
+    return cabecera + cDos.toAfip() + "\r\n" + "\r\n\r\n\r\n\r\n\r\n---\r\n\r\n\r\n" + detalle
+
 @app.route("/", methods=['GET', 'POST'])
 def main():
     if request.method == 'POST':
@@ -43,30 +69,8 @@ def main():
             return 'No selected file'
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            stream = io.StringIO(file.stream.read().decode("UTF8"), newline=None)
-            ventasCsv = csv.reader(stream, delimiter=',', quotechar='"')
-            next(ventasCsv, None)
-            detalle = ''
-            cabecera = ''
-            isLastRound = False
-            cDos = CabeceraTipoDos(request.form['cuit'])
-            for row in ventasCsv:
-                print(row)
-                cUno = CabeceraTipoUno(row)
-                d = Detalle(row)
-                if cUno.isEmpty():
-                    isLastRound = True
-                    print('isLastRound is true')
-                else:
-                    cDos.addRow(row, cUno)
-                    print('cUno' + row[0])
-                    if isLastRound == True:
-                        # calculate last line
-                        doNothing = None
-                    else:
-                        detalle += d.toAfip() + "\r\n"
-                        cabecera += cUno.toAfip() + "\r\n"
-            return Response(cabecera + cDos.toAfip() + "\r\n" + "\r\n\r\n\r\n\r\n\r\n---\r\n\r\n\r\n" + detalle, mimetype='text/text')
+            
+            return Response(crearReporte(request.form['cuit'], file.stream.read().decode("UTF8")), mimetype='text/text')
     return render_template('index.html')
 
 @app.route("/csv/", methods=['GET', 'POST'])
@@ -148,6 +152,8 @@ def csv_parser():
                     newRow.append(normalizarFloat(ivaRI))
                     newRow.append(normalizarFloat(netoRI))
                     newRow.append(normalizarFloat(ivaCF))
+                    if netoCF == '':
+                        netoCF = '0.0'    
                     newRow.append(normalizarFloat(netoCF))
                     newRow.append('0.0')
                     newRow.append('0.0')
@@ -164,7 +170,9 @@ def csv_parser():
         output = io.StringIO()
         writer = csv.writer(output)
         writer.writerows(result)
-        return Response(output.getvalue(), mimetype='text/text')
+        csvText = output.getvalue()
+        print(csvText)
+        return Response(crearReporte(request.form['cuit'], csvText), mimetype='text/text')
     return render_template('csv.html')
 
 if __name__ == "__main__":
