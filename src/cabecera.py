@@ -113,7 +113,6 @@ class CabeceraTipoUno:
         else:
             self.importeNetoGravado = '0.0'
             self.impuestoLiquidado = '0.0'
-            # que ponemos?
             self.tipoResponsable = '01'
 
     def getImporteNetoGravado(self):
@@ -144,11 +143,11 @@ class CabeceraTipoUno:
 
 #Campo 22: Transporte.
 #Es un valor mayor o igual a cero.
-#Deberá contener la sumatoria de los ítems facturados hasta la hoja que se está registrando inclusive
+#Debera contener la sumatoria de los items facturados hasta la hoja que se esta registrando inclusive
 #(sumatoria del campo 11 del archivo de detalle).
-#Sólo existirá transporte si la cantidad de hojas (campo 8) es mayor a uno.
-#Este campo será cero en la última hoja del comprobante lo cual, de existir una correlatividad numérica en los comprobantes,
-#se determina con la siguiente validación: Campo 7 + Campo 8 - 1= Campo 6.
+#Solo existira transporte si la cantidad de hojas (campo 8) es mayor a uno.
+#Este campo sera cero en la ultima hoja del comprobante lo cual, de existir una correlatividad numerica en los comprobantes,
+#se determina con la siguiente validacion: Campo 7 + Campo 8 - 1= Campo 6.
     def getTransporte(self):
         return '0.0'
 
@@ -213,10 +212,10 @@ class CabeceraTipoUno:
 #            self.getFechaAnulacion() +\
 #            self.getInformacionAdicional()
 
-# Campo 27: Código de operación. - E
+# Campo 27: Codigo de operacion. - E
 # Campo 28: CAI. - blanco
 # Campo 29: Fecha de vencimiento.
-# Campo 30: Fecha anulación del comprobante.
+# Campo 30: Fecha anulacion del comprobante.
 
 class CabeceraTipoDos:
     def __init__(self, cuitDelInformante):
