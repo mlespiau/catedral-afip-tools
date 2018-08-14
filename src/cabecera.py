@@ -1,9 +1,13 @@
 import datetime
 
 def formatearImporte(importe, numerales, decimales):
-    resultado = str(importe).split('.')
-    parteEntera = int(resultado[0])
-    parteDecimal = str(resultado[1])
+    try:
+        resultado = str(importe).split('.')
+        parteEntera = int(resultado[0])
+        parteDecimal = str(resultado[1])
+    except IndexError:    
+        parteEntera = int(importe)
+        parteDecimal = str(0)
     if len(parteDecimal) > 3:
         parteDecimal = parteDecimal[:3]
     return ('{0:0' + str(numerales) + 'd}').format(parteEntera) + str(parteDecimal).ljust(decimales, '0')
@@ -79,17 +83,18 @@ class CabeceraTipoUno:
     def getTotalConceptosQueNoIntegranElPrecioGravado(self):
         return '0.0'
 
+    def getNumberAsInt(self, s):
+        try:
+            return int(s)
+        except ValueError:
+            return int(float(s))
+
     def calculateImporteNetoGravado(self):
-        netoRI = self.data[8].split('.')
-        netoRIinteger, netoRIdecimal = int(netoRI[0]), netoRI[1]
-        netoCF = self.data[10].split('.')
-        netoCFinteger, netoCFdecimal = int(netoCF[0]), netoCF[1]
-        netoMON = self.data[12].split('.')
-        netoMONinteger, netoMONdecimal = int(netoMON[0]), netoMON[1]
-        netoEX = self.data[14].split('.')
-        netoEXinteger, netoEXdecimal = int(netoEX[0]), netoEX[1]
-        netoNC = self.data[16].split('.')
-        netoNCinteger, netoNCdecimal = int(netoNC[0]), netoNC[1]
+        netoRIinteger = self.getNumberAsInt(self.data[8])
+        netoCFinteger = self.getNumberAsInt(self.data[10])
+        netoMONinteger = self.getNumberAsInt(self.data[12])
+        netoEXinteger = self.getNumberAsInt(self.data[14])
+        netoNCinteger = self.getNumberAsInt(self.data[16])
         if  netoRIinteger > 0:
             self.importeNetoGravado = self.data[8]
             self.impuestoLiquidado = self.data[7]
