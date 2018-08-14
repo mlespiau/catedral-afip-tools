@@ -54,7 +54,10 @@ def crearReporte(cuit, ventasCsvText):
             else:
                 detalle += d.toAfip() + "\r\n"
                 cabecera += cUno.toAfip() + "\r\n"
-    return cabecera + cDos.toAfip() + "\r\n" + "\r\n\r\n\r\n\r\n\r\n---\r\n\r\n\r\n" + detalle
+    return cabecera + cDos.toAfip() + "\r\n" + getSeparador() + detalle
+
+def getSeparador():
+    return "\r\n\r\n\r\n\r\n\r\n---\r\n\r\n\r\n"
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
