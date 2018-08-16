@@ -1,0 +1,3 @@
+src/prof/*
+src/.pytest_cache/*
+src/__pycache__/*
