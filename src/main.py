@@ -39,15 +39,12 @@ def crearReporte(cuit, ventasCsvText):
     isLastRound = False
     cDos = CabeceraTipoDos(cuit)
     for row in ventasCsv:
-        print(row)
         cUno = CabeceraTipoUno(row)
         d = Detalle(row)
         if cUno.isEmpty():
             isLastRound = True
-            print('isLastRound is true')
         else:
             cDos.addRow(row, cUno)
-            print('cUno' + row[0])
             if isLastRound == True:
                 # calculate last line
                 doNothing = None
@@ -94,8 +91,6 @@ def csv_parser():
             reader = csv.reader(stream, delimiter=',', quotechar='"')
             i = 0
             for row in reader:
-                print(i)
-                print(row)
                 newRow = []
                 if i == 0:
                     newRow.append('')
@@ -127,7 +122,6 @@ def csv_parser():
                     # do nothing
                     pepe = 0
                 else:
-                    print(row[0])
                     newRow.append('')
                     try:
                         newRow.append(datetime.datetime.strptime(row[0].strip(), "%d/%m/%Y  %H:%M:%S").strftime("%m/%d/%y"))
@@ -174,7 +168,6 @@ def csv_parser():
         writer = csv.writer(output)
         writer.writerows(result)
         csvText = output.getvalue()
-        print(csvText)
         return Response(crearReporte(request.form['cuit'], csvText), mimetype='text/text')
     return render_template('csv.html')
 
