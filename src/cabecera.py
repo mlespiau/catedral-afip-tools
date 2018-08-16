@@ -234,10 +234,13 @@ class CabeceraTipoDos:
 
     def addRow(self, data, cabeceraTipoUno):
         self.cantidadRegistrosDeTipoUno += 1
-        print(data[20])
+        print("addRow: data[20]" + data[20] + ", ImporteNetoGravado: " + str(cabeceraTipoUno.getImporteNetoGravado()) + ", impuestoLiquidado: " + str(cabeceraTipoUno.getImpuestoLiquidado()))
         self.importeTotal += float(data[20])
+        print("importeTotal: " + str(self.importeTotal))
         self.importeNetoGravadoTotal += float(cabeceraTipoUno.getImporteNetoGravado())
+        print("importeNetoGravadoTotal: " + str(self.importeNetoGravadoTotal))
         self.impuestoLiquidado += float(cabeceraTipoUno.getImpuestoLiquidado())
+        print("impuestoLiquidado: " + str(self.impuestoLiquidado))
         if self.periodo == 'AAAAMM':
             self.periodo = datetime.datetime.strptime(data[1], "%d/%m/%y").strftime("%Y%m")
 

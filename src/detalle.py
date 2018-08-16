@@ -46,7 +46,7 @@ class Detalle:
             self.subTotalPorRegistro = 0.0
 
     def getTipoComprobante(self):
-        tipoComprobantes = { 'FA': '01', 'FB': '06', 'N/C B': '08', 'N/C A': '03' }
+        tipoComprobantes = { 'FA': '01', 'FB': '06', 'N/C B': '08', 'N/C A': '03', 'E': '01' }
         tipo = tipoComprobantes.get(self.tipoComprobante);
         if tipo == None:
             raise ValueError('El tipo de comprobante es desconocido: ' + self.tipoComprobante)
