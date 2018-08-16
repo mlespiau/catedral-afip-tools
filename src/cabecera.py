@@ -1,16 +1,7 @@
 import datetime
 
 def formatearImporte(importe, numerales, decimales):
-    if str(importe).find('.') == -1:
-        parteEntera = int(importe)
-        parteDecimal = str(0)
-    else:
-        resultado = str(importe).split('.')
-        parteEntera = int(resultado[0])
-        parteDecimal = str(resultado[1])
-    if len(parteDecimal) > 3:
-        parteDecimal = parteDecimal[:3]
-    return ('{0:0' + str(numerales) + 'd}').format(parteEntera) + str(parteDecimal).ljust(decimales, '0')
+    return ('{:0' + str(numerales+decimales+1) + '.' + str(decimales) + 'f}').format(float(importe)).replace('.', '')
 
 class CabeceraTipoUno:
     def __init__(self, data):
