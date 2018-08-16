@@ -1,13 +1,13 @@
 import datetime
 
 def formatearImporte(importe, numerales, decimales):
-    try:
+    if str(importe).find('.') == -1:
+        parteEntera = int(importe)
+        parteDecimal = str(0)
+    else:
         resultado = str(importe).split('.')
         parteEntera = int(resultado[0])
         parteDecimal = str(resultado[1])
-    except IndexError:    
-        parteEntera = int(importe)
-        parteDecimal = str(0)
     if len(parteDecimal) > 3:
         parteDecimal = parteDecimal[:3]
     return ('{0:0' + str(numerales) + 'd}').format(parteEntera) + str(parteDecimal).ljust(decimales, '0')
@@ -32,7 +32,7 @@ class CabeceraTipoUno:
     def getFechaComprobante(self):
         return datetime.datetime.strptime(self.fechaComprobante, "%m/%d/%y").strftime("%Y%m%d")
 
-    def getTipoComprobante(self):
+    def getTipoComprobante(self):       
         tipoComprobantes = { 'FA': '01', 'FB': '06', 'N/C B': '08', 'N/C A': '03', 'E': '06' }
         tipo = tipoComprobantes.get(self.tipoComprobante);
         if tipo == None:
