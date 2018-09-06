@@ -1,7 +1,10 @@
 import datetime
+from decimal import Decimal, ROUND_DOWN
 
 def formatearImporte(importe, numerales, decimales):
-    return ('{:0' + str(numerales+decimales+1) + '.' + str(decimales) + 'f}').format(float(importe)).replace('.', '')
+    value = Decimal(importe)
+    return ('{:0' + str(numerales+decimales+1) + '.' + str(decimales) + 'f}').format(Decimal(value.quantize(Decimal('.' + str(1).zfill(decimales)), rounding=ROUND_DOWN))).replace('.', '')
+
 
 class CabeceraTipoUno:
     def __init__(self, data):

@@ -30,14 +30,13 @@ def normalizarTasa(tasa):
 def normalizarFloat(valor):
     return valor.replace(',', '')
 
-def crearReporte(cuit, ventasCsvText):
+def crearReporte(cDos, ventasCsvText):
     stream = io.StringIO(ventasCsvText, newline=None)
     ventasCsv = csv.reader(stream, delimiter=',', quotechar='"')
     next(ventasCsv, None)
     detalle = ''
     cabecera = ''
     isLastRound = False
-    cDos = CabeceraTipoDos(cuit)
     for row in ventasCsv:
         cUno = CabeceraTipoUno(row)
         d = Detalle(row)
@@ -70,7 +69,7 @@ def main():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             
-            return Response(crearReporte(request.form['cuit'], file.stream.read().decode("UTF8")), mimetype='text/text')
+            return Response(crearReporte(CabeceraTipoDos(request.form['cuit']), file.stream.read().decode("UTF8")), mimetype='text/text')
     return render_template('index.html')
 
 @app.route("/csv/", methods=['GET', 'POST'])
@@ -168,10 +167,10 @@ def csv_parser():
         writer = csv.writer(output)
         writer.writerows(result)
         csvText = output.getvalue()
-        return Response(crearReporte(request.form['cuit'], csvText), mimetype='text/text')
+        return Response(crearReporte(CabeceraTipoDos(request.form['cuit']), csvText), mimetype='text/text')
     return render_template('csv.html')
 
 if __name__ == "__main__":
-    app.run(host= '0.0.0.0', port=8080, debug=True)
+    app.run(host= '0.0.0.0', port=5000, debug=True)
 
 # http://www.afip.gov.ar/afip/resol136102_Anexo_II.html
